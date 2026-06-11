@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Study Helper AI</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=IBM+Plex+Serif:wght@500;600&display=swap"
+        rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+    <div class="bg-orb bg-orb-a"></div>
+    <div class="bg-orb bg-orb-b"></div>
+
+    <main class="app-shell">
+        <header class="hero panel fade-in-up">
+            <p class="eyebrow">INTP302</p>
+            <h1>Study Helper AI</h1>
+            <p class="subtitle">
+                Turn course notes into a focused summary, key points, and review questions in seconds.
+            </p>
+            <div class="status-row">
+                <span id="status-pill" class="pill">Checking backend...</span>
+                <span id="provider-pill" class="pill muted">Provider: -</span>
+            </div>
+        </header>
+
+        <section class="grid-layout">
+            <div class="panel form-panel fade-in-up delay-1">
+                <h2>Analyze Notes</h2>
+                <form id="analyze-form">
+                    <label for="title">Title (optional)</label>
+                    <input id="title" name="title" type="text" maxlength="120" placeholder="Cloud Fundamentals" />
+
+                    <label for="notes">Study notes</label>
+                    <textarea id="notes" name="text" maxlength="6000" required
+                        placeholder="Paste your notes here (max 6000 characters)..."></textarea>
+
+                    <div class="form-footer">
+                        <small id="char-count">0 / 6000</small>
+                        <button id="submit-btn" type="submit">Analyze Notes</button>
+                    </div>
+                </form>
+                <p id="form-error" class="error" role="alert"></p>
+            </div>
+
+            <aside class="panel history-panel fade-in-up delay-2">
+                <div class="history-head">
+                    <h2>Saved Analyses</h2>
+                    <button id="refresh-btn" type="button" class="ghost">Refresh</button>
+                </div>
+                <ul id="history-list" class="history-list"></ul>
+                <p id="history-empty" class="muted-copy">No analyses yet. Create your first one.</p>
+            </aside>
+        </section>
+
+        <section class="panel result-panel fade-in-up delay-3">
+            <div class="result-head">
+                <div>
+                    <h2 id="result-title">Current Result</h2>
+                    <p id="result-meta" class="muted-copy">Submit notes to see your study aid.</p>
+                </div>
+                <span class="pill">AI-generated study aid</span>
+            </div>
+
+            <article id="result-content" class="result-content">
+                <section>
+                    <h3>Summary</h3>
+                    <p id="summary-text" class="placeholder">Your summary will appear here.</p>
+                </section>
+
+                <section>
+                    <h3>Key Points</h3>
+                    <ul id="key-points" class="bullet-list">
+                        <li class="placeholder">Key points will appear here.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h3>Review Questions</h3>
+                    <ul id="review-questions" class="bullet-list">
+                        <li class="placeholder">Review questions will appear here.</li>
+                    </ul>
+                </section>
+            </article>
+        </section>
+    </main>
+
+    <script src="app.js" defer></script>
+</body>
+
+</html>

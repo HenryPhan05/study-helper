@@ -5,6 +5,7 @@ function getConfig() {
     port: Number(process.env.PORT || 3001),
     nodeEnv: process.env.NODE_ENV || 'development',
     dataFilePath: process.env.DATA_FILE_PATH || path.join('data', 'notes.json'),
+    frontendDir: process.env.FRONTEND_DIR || path.join(process.cwd(), 'public'),
     storageProvider: process.env.STORAGE_PROVIDER || 'local-json',
     azureTables: {
       tableUrl: process.env.AZURE_TABLES_TABLE_URL || '',

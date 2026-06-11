@@ -1,7 +1,20 @@
 const crypto = require('node:crypto');
+const fs = require('node:fs/promises');
+const path = require('node:path');
 const { readJsonBody, sendError, sendJson } = require('./utils/http');
 
 const MAX_NOTE_LENGTH = 6000;
+const MIME_TYPES = {
+  '.html': 'text/html; charset=utf-8',
+  '.css': 'text/css; charset=utf-8',
+  '.js': 'application/javascript; charset=utf-8',
+  '.json': 'application/json; charset=utf-8',
+  '.svg': 'image/svg+xml',
+  '.png': 'image/png',
+  '.jpg': 'image/jpeg',
+  '.jpeg': 'image/jpeg',
+  '.webp': 'image/webp'
+};
 
 function createRouter({ config, noteRepository, aiService }) {
   return async function route(req, res) {
@@ -77,6 +90,13 @@ function createRouter({ config, noteRepository, aiService }) {
         return;
       }
 
+      if (req.method === 'GET' && !url.pathname.startsWith('/api/')) {
+        const didServeStatic = await tryServeStaticFile(url.pathname, config.frontendDir, res);
+        if (didServeStatic) {
+          return;
+        }
+      }
+
       sendError(res, 404, 'Route was not found.');
     } catch (error) {
       const statusCode = error.statusCode || 500;
@@ -90,6 +110,36 @@ function createRouter({ config, noteRepository, aiService }) {
       sendError(res, statusCode, message);
     }
   };
+}
+
+async function tryServeStaticFile(pathname, frontendDir, res) {
+  const requestedPath = pathname === '/' ? '/index.html' : pathname;
+  const safeRelativePath = path.normalize(requestedPath).replace(/^\/+/, '');
+  const filePath = path.resolve(frontendDir, safeRelativePath);
+  const basePath = path.resolve(frontendDir);
+
+  if (!filePath.startsWith(basePath)) {
+    return false;
+  }
+
+  try {
+    const content = await fs.readFile(filePath);
+    const ext = path.extname(filePath).toLowerCase();
+    const contentType = MIME_TYPES[ext] || 'application/octet-stream';
+
+    res.writeHead(200, {
+      'Content-Type': contentType,
+      'Content-Length': content.byteLength
+    });
+    res.end(content);
+    return true;
+  } catch (error) {
+    if (error.code === 'ENOENT' && requestedPath !== '/index.html' && !path.extname(requestedPath)) {
+      return tryServeStaticFile('/index.html', frontendDir, res);
+    }
+
+    return false;
+  }
 }
 
 function validateAnalyzeRequest(body) {

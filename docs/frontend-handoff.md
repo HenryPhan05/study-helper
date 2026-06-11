@@ -2,6 +2,8 @@
 
 This document explains how the frontend can connect to the Study Helper backend.
 
+Note: a working frontend UI is now included in this repository and is served by the backend at `/`.
+
 ## Current Backend Status
 
 The backend is ready for frontend integration. Local development uses:
@@ -230,4 +232,3 @@ Example response:
 - The backend handles AI and storage.
 - During local development, mock AI output is expected and acceptable.
 - The final deployed app should show the Azure backend URL instead of localhost.
-

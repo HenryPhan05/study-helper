@@ -4,9 +4,10 @@ Cloud + AI prototype for INTP302. The app helps students paste short course note
 
 ## Project Status
 
-Backend skeleton is ready for local development. It includes:
+The backend and frontend are ready for local development. It includes:
 
 - REST API routes for note analysis and history
+- browser frontend for note input, results, and saved history
 - mock AI mode for frontend integration before Azure credentials are available
 - Azure OpenAI integration path through environment variables
 - local JSON storage for early development
@@ -33,17 +34,19 @@ Create a local environment file:
 cp .env.example .env.local
 ```
 
-Run the API:
+Run the app:
 
 ```bash
 npm run dev
 ```
 
-The API starts at:
+The app starts at:
 
 ```text
 http://localhost:3001
 ```
+
+Open this URL in your browser to use the frontend UI.
 
 ## API Routes
 
