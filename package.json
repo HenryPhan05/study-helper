@@ -1,0 +1,15 @@
+{
+  "name": "intp302-study-helper-ai",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Cloud + AI prototype backend for a student study helper.",
+  "main": "src/server.js",
+  "scripts": {
+    "dev": "node --watch src/server.js",
+    "start": "node src/server.js",
+    "test": "node --test"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}
